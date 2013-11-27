@@ -3,6 +3,10 @@
   /*height: 100%;*/
 }
 
+div {
+  display: block;
+}
+
 .element {
   font-size: 21px;
 }
