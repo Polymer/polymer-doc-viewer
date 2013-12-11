@@ -107,7 +107,6 @@ a {
 }
 
 #docsInner {
-  overflow: auto;
   min-width: 500px;
 }
 
