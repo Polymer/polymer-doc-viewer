@@ -13,7 +13,7 @@
   <link rel="import" href="polymer-doc-viewer.html">
 </head>
 <body>
-  <input style="width: 300px;" value="polymer-localstorage"><button onclick="go()">Go</button>
+  <input style="width: 80%; padding: 12px;" value="/bowertopia/php/git-proxy.php?sjmiles/webaudio-knob/webaudio-knob.html"><button onclick="go()">Go</button>
   <polymer-doc-viewer style="position: absolute; top: 64px; left: 0; right: 0; bottom: 0;" sources='["../polymer-ajax/polymer-ajax.html", "../polymer-collapse/polymer-collapse.html"]'></polymer-doc-viewer>
   <script>
     document.querySelector('polymer-doc-viewer').sources = [
@@ -22,7 +22,7 @@
     ];
     function go() {
       var value = document.querySelector('input').value;
-      document.querySelector('polymer-doc-viewer').sources = ['../' + value + '/' + value + '.html'];
+      document.querySelector('polymer-doc-viewer').url = value;
     }
   </script>
 </body>
