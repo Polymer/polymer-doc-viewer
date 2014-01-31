@@ -10,8 +10,23 @@
 <script src="highlight.js/highlight.pack.js"></script>
 <link rel="import" href="../marked-js/marked-js.html">
 
+<!--
+
+Displays YUIDoc formatted source documentation scraped from input urls.
+
+@class polymer-doc-viewer
+-->
 <polymer-element name="polymer-doc-viewer" attributes="url href sources">
+<!--
+
+Set url to add documentation from that location to the view.
+
+@attribute url
+@type String
+-->
+
   <template>
+
     <context-free-parser url="{{url}}" on-data-ready="{{parserDataReady}}"></context-free-parser>
     <template repeat="{{sources}}">
       <context-free-parser url="{{}}" on-data-ready="{{parserDataReady}}"></context-free-parser>
@@ -23,24 +38,32 @@
     <polymer-grid-layout id="grid" on-polymer-grid-layout="{{gridLayout}}"></polymer-grid-layout>
 
     <div id="navigation" offscreen="basement" style="overflow-y: scroll;">
+
       <polymer-ui-menu selected="0" id="menu">
+
         <template repeat="{{classes}}">
           <polymer-ui-menu-item><a href="#{{name}}">{{name}}</a></polymer-ui-menu-item>
         </template>
+
       </polymer-ui-menu>
+
     </div>
 
     <div id="docs" flex on-marked-js-highlight="{{hilight}}" on-scroll="{{docsScroll}}">
       <div id="docsInner" flex>
         <div id="fixed">
           <div class="header">
+
             <polymer-ui-icon-button icon="menu" on-tap="{{toggleNav}}" active="{{navOpen}}"></polymer-ui-icon-button>
             &nbsp;<span id="fixedTopic" class="element"></span>
+
           </div>
         </div>
 
         <template repeat="{{class in classes}}">
+
           <a id="{{class.name}}" class="element"></a>
+
           <div class="header topic">
             <polymer-ui-icon-button on-tap="{{toggleLayout}}" icon="menu" style="visibility: hidden;"></polymer-ui-icon-button>
             &nbsp;<span class="element">{{class.name}}</span>
@@ -50,70 +73,91 @@
             <polymer-flex-layout></polymer-flex-layout>
 
             <div class="summary">
-              <section class="box">
-                <div class="ntitle">Methods</div>
-                <template repeat="{{class.methods}}">
-                  <span class="name method">{{name}}</span><br/>
-                </template>
-              </section>
+
+              <template if="{{class.methods.length}}">
                 <section class="box">
-                <div class="ntitle">Attributes</div>
-                <template repeat="{{class.attributes}}">
-                  <span class="name nattribute">{{name}}</span><br/>
-                </template>
-              </section>
-              <section class="box">
-                <div class="ntitle">Events</div>
-                <template repeat="{{class.events}}">
-                  <span class="name event">{{name}}</span><br>
-                </template>
-              </section>
+                  <div class="ntitle">Methods</div>
+                  <template repeat="{{class.methods}}">
+                    <span class="name method">{{name}}</span><br/>
+                  </template>
+                </section>
+              </template>
+
+              <template if="{{class.attributes.length}}">
+                <section class="box">
+                  <div class="ntitle">Attributes</div>
+                  <template repeat="{{class.attributes}}">
+                    <span class="name nattribute">{{name}}</span><br/>
+                  </template>
+                </section>
+              </template>
+
+              <template if="{{class.events.length}}">
+                <section class="box">
+                  <div class="ntitle">Events</div>
+                  <template repeat="{{class.events}}">
+                    <span class="name event">{{name}}</span><br>
+                  </template>
+                </section>
+              </template>
+
             </div>
 
             <div flex>
               <div style="padding: 16px;">
-                <section class="box">
+
+                <!--<section class="box">
                   Module<br>
                   <span class="name">{{class.module}}</span>
-                </section>
+                </section>-->
 
-                <section class="box">
-                  <div class="ntitle">Description</div>
-                  <marked-js text="{{class.description}}"></marked-js>
-                </section>
+                <template if="{{class.description}}">
+                  <section class="box">
+                    <div class="ntitle">Description</div>
+                    <marked-js text="{{class.description}}"></marked-js>
+                  </section>
+                </template>
 
-                <section class="box">
-                  <div class="ntitle">Methods</div>
-                  <template repeat="{{class.methods}}">
-                    <span class="name method">{{name}}</span>
-                    <marked-js text="{{description}}"></marked-js>
-                  </template>
-                </section>
+                <template if="{{class.methods.length}}">
+                  <section class="box">
+                    <div class="ntitle">Methods</div>
+                    <template repeat="{{class.methods}}">
+                      <span class="name method">{{name}}</span>
+                      <marked-js text="{{description}}"></marked-js>
+                    </template>
+                  </section>
+                </template>
 
-                <section class="box">
-                  <div class="ntitle">Attributes</div>
-                  <template repeat="{{class.attributes}}">
-                    <span class="name nattribute">{{name}}</span><span class="name type">{{type}}</span>
-                    <marked-js text="{{description}}"></marked-js>
-                    <br>
-                  </template>
-                </section>
+                <template if="{{class.attributes.length}}">
+                  <section class="box">
+                    <div class="ntitle">Attributes</div>
+                    <template repeat="{{class.attributes}}">
+                      <span class="name nattribute">{{name}}</span><span class="name type">{{type}}</span>
+                      <marked-js text="{{description}}"></marked-js>
+                      <br>
+                    </template>
+                  </section>
+                </template>
 
-                <section class="box">
-                  <div class="ntitle">Events</div>
-                  <template repeat="{{class.events}}">
-                    <span class="name event">{{name}}</span>
-                    <marked-js text="{{description}}"></marked-js>
-                    <br>
-                  </template>
-                </section>
+                <template if="{{class.events.length}}">
+                  <section class="box">
+                    <div class="ntitle">Events</div>
+                    <template repeat="{{class.events}}">
+                      <span class="name event">{{name}}</span>
+                      <marked-js text="{{description}}"></marked-js>
+                      <br>
+                    </template>
+                  </section>
+                </template>
+
               </div>
             </div>
           </div>
         </template>
 
         <hr>
-        <div style="height: 512px"></div>
+        <div style="height: 1024px"></div>
+
       </div>
     </div>
   </template>
