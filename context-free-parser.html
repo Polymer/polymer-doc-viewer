@@ -39,16 +39,18 @@
 
         var js_matches = text.match(/\/\*\*([\s\S]*?)\*\//g) || [];
         text = text.replace(/\/\*\*([\s\S]*?)\*\//g, '');
+
         var html_matches = text.match(/<!--([\s\S]*?)-->/g) || [];
         var matches = html_matches.concat(js_matches);
 
         matches.forEach(function(m) {
 
-          var lines = m.replace(/\r\n/g, '\n').replace(/^\s*\/\*\*|^\s*\*\/|^\s*\*|^\s*\<\!-\-|^s*\-\-\>/gm, '').split('\n');
+          var lines = m.replace(/\r\n/g, '\n').replace(/^\s*\/\*\*|^\s*\*\/|^\s*\* |^\s*\<\!-\-|^s*\-\-\>/gm, '').split('\n');
+          console.log(lines);
           
           var pragmas = [];
           lines = lines.filter(function(l) {
-            var m = l.match(/\s*@(\w*) (.*)/);
+            var m = l.match(/\s*@([\w-]*) (.*)/);
             if (!m) {
               return true;
             }
