@@ -46,8 +46,7 @@
         matches.forEach(function(m) {
 
           var lines = m.replace(/\r\n/g, '\n').replace(/^\s*\/\*\*|^\s*\*\/|^\s*\* ?|^\s*\<\!-\-|^s*\-\-\>/gm, '').split('\n');
-          console.log(lines);
-          
+
           var pragmas = [];
           lines = lines.filter(function(l) {
             var m = l.match(/\s*@([\w-]*) (.*)/);
