@@ -63,6 +63,7 @@
             switch (pragma) {
 
               case 'class':
+              case 'element':
                 current = {
                   name: content,
                   description: code
@@ -87,7 +88,8 @@
                 break;
 
               default:
-                makePragma(current, pragma, content);
+                current[pragma] = content;
+                //makePragma(current, pragma, content);
                 break;
             }
           });
