@@ -11,21 +11,30 @@
   <link rel="import" href="components/polymer-doc-viewer/polymer-doc-viewer.html">
 
   <style>
+
     html, body {
       font-family: Arial, sans-serif;
       white-space: nowrap;
       overflow: hidden;
+      height: 100%;
     }
+
+    polymer-doc-viewer {
+      height: 100%;
+    }
+
   </style>
 
 </head>
 
 <body>
 
-  <polymer-doc-viewer style="position: absolute; top: 64px; left: 0; right: 0; bottom: 0;"></polymer-doc-viewer>
+  <polymer-doc-viewer></polymer-doc-viewer>
 
   <script>
+
     document.querySelector('polymer-doc-viewer').sources = window.location.search.slice(1).split('&');
+
   </script>
 
 </body>
